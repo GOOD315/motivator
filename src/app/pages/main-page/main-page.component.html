@@ -1,0 +1,13 @@
+<!-- <div class="header">&#8226; Привет, у тебя осталось n задач на сегодня</div> -->
+
+<div class="body">
+  <div class="chartContainer">
+    <apx-chart [series]="chart.series" [labels]="chart.labels" [chart]="chart.details" [tooltip]="chart.tooltip"
+      [legend]="chart.legend" [colors]="chart.colors" [plotOptions]="chart.plotOptions">
+    </apx-chart>
+  </div>
+
+  <div class="taskTreeContainer">
+    <task-tree *ngIf="this.service.macroTasks$ | async as tasks" [tasks]="tasks"></task-tree>
+  </div>
+</div>

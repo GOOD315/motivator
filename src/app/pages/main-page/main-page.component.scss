@@ -1,0 +1,18 @@
+.body {
+  // background-color: #DED4C0;
+
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.chartContainer {
+  width: 800px;
+  max-height: 500px;
+}
+
+.taskTreeContainer {
+  margin-left: 40px;
+  color: black;
+}
+

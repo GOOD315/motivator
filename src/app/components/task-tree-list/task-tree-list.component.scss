@@ -1,0 +1,23 @@
+.body {
+  width: 100%;
+
+  font-size: 18px;
+}
+
+.microTask {
+  width: 100%;
+  padding-bottom: 5px;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: row;
+
+  &__margin {
+    min-width: 20px;
+  }
+}
+
+.dot::before {
+  content: "●";
+  color: red;
+  font-size: 25px;
+}

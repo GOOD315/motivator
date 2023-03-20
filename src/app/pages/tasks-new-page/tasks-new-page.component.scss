@@ -1,0 +1,58 @@
+@mixin labelFont() {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+@mixin headerFont() {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+@mixin formBorder() {
+  border: 2px solid;
+  border-radius: 10px;
+}
+
+.container {
+  padding: 30px;
+}
+
+.form {
+  max-width: 600px;
+  @include formBorder();
+
+  background-color: white;
+  padding: 30px;
+  font-size: 15px;
+
+
+  &__header {
+    @include headerFont();
+    margin-bottom: 15px;
+  }
+
+  &__body {
+    display: flex;
+  }
+
+  &__macro-row {
+    width: 49%;
+    margin: 1%;
+  }
+
+  &__micro-row{
+    width: 49%;
+    margin: 1%;
+  }
+
+  &__input {
+    margin-top: 5px;
+    width: 100%;
+  }
+
+  &__submit {
+    text-align: right;
+  }
+}

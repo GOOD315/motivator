@@ -1,0 +1,219 @@
+<div class="container">
+
+  <div class="card">
+    <button mat-raised-button (click)="setEditMode()">
+      Edit Mode
+    </button>
+    <button mat-raised-button (click)="setReadingMode()">
+      Reading Mode
+    </button>
+    <ng-container *ngIf="!editMode">
+      <div class="card__header">
+        <div class="card__date">
+          {{task.dateFinish | date}}
+        </div>
+        <div class="card__name">
+          {{task.name}}
+        </div>
+        <div class="card__priority">
+          {{task.priority}}
+        </div>
+      </div>
+      <div class="macro-body">
+        <div class="card__row">
+          <div class="card__col">
+            <div class="card__input">
+              {{task.description}}
+            </div>
+          </div>
+          <div class="card__col">
+          </div>
+        </div>
+      </div>
+
+      <div class="micro-body">
+        <div class="micro-body__row" *ngFor="let microTask of task.microTasks; let i=index">
+          <div class="micro-body__date">
+            {{task.dateStart | date}} - {{task.dateStart | date }}
+          </div>
+          <div class="micro-body__description">
+            {{task.description}}
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- EDIT MODE -->
+    <ng-container *ngIf="editMode">
+      <form [formGroup]="form">
+        <div class="card__header">
+          <mat-form-field class="card__input" appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name">
+          </mat-form-field>
+        </div>
+
+        <div class="macro__body">
+          <div class="card__row">
+            <div class="card__col">
+              <mat-form-field class="card__input" appearance="fill">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description"></textarea>
+              </mat-form-field>
+            </div>
+
+            <div class="card__col">
+              <mat-form-field class="card__input" appearance="fill">
+                <mat-label>Дата окончания</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="dateFinish">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="form.controls['dateFinish'].hasError('matEndDateInvalid')">Invalid end date
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <!-- MACRO TASK EDIT -->
+        <div class="micro-body">
+          <div class="micro-body__row" *ngFor="let microTask of microTasks.controls; let i = index">
+            <form [formGroup]="microTask">
+              <div class="micro-body__date">
+                <mat-form-field class="card__input" appearance="fill">
+                  <mat-label>Дата окончания</mat-label>
+                  <input matInput [matDatepicker]="picker" formControlName="dateFinish">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                  <mat-error *ngIf="microTask.controls['dateFinish'].hasError('matEndDateInvalid')">Invalid end date
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="micro-body__description">
+                <mat-form-field class="card__input" appearance="fill">
+                  <mat-label>Описание:</mat-label>
+                  <textarea matInput formControlName="description"></textarea>
+                </mat-form-field>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- <mat-form-field class="card__input" appearance="fill">
+              <mat-label>Приоритет</mat-label>
+              <select matNativeControl formControlName="priority">
+                <option value="1">Высокий</option>
+                <option value="2">Средний</option>
+                <option value="3">Низкий</option>
+              </select>
+            </mat-form-field> -->
+
+
+
+
+
+
+
+
+      </form>
+    </ng-container>
+  </div>
+
+
+
+
+
+
+
+
+  <form *ngIf="false" class="card" [formGroup]="form">
+
+    <div class="card__header"> Создание макро-задачи </div>
+
+    <div class="card__body">
+      <div class="card__macro-row">
+        <mat-form-field class="card__input" appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field class="card__input" appearance="fill">
+          <mat-label>Приоритет</mat-label>
+          <select matNativeControl formControlName="priority">
+            <option value="1">Высокий</option>
+            <option value="2">Средний</option>
+            <option value="3">Низкий</option>
+          </select>
+        </mat-form-field>
+
+        <mat-form-field class="card__input" appearance="fill">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate formControlName="dateStart" placeholder="Start date">
+            <input matEndDate formControlName="dateFinish" placeholder="End date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+
+          <mat-error *ngIf="form.controls['dateStart'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
+          <mat-error *ngIf="form.controls['dateFinish'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="card__macro-row">
+        <mat-form-field class="card__input" appearance="fill">
+          <mat-label>Description</mat-label>
+          <textarea style="height: 180px;" matInput formControlName="description"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- МИКРОЗАДАЧА -->
+    <ng-container *ngFor="let microTask of microTasks.controls; let i = index">
+      <div class="card__header"> Микрозадача
+        <button mat-raised-button (click)="deleteMicroTask(i)">
+          Удалить
+        </button>
+      </div>
+      <form [formGroup]="microTask">
+
+        <div class="card__body">
+          <div style="width:40%; margin-right: 10px">
+            <mat-form-field class="card__input" appearance="fill">
+              <mat-label>Enter a date range</mat-label>
+              <mat-date-range-input style="height: 30px;" [rangePicker]="picker">
+                <input matStartDate formControlName="dateStart" placeholder="Start date">
+                <input matEndDate formControlName="dateFinish" placeholder="End date">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+
+              <mat-error *ngIf="microTask.controls['dateStart'].hasError('matStartDateInvalid')">Дата начала превышает
+                дату
+                макро-задачи</mat-error>
+              <mat-error *ngIf="microTask.controls['dateFinish'].hasError('matEndDateInvalid')">Дата окончания превышает
+                дату макро-задачи</mat-error>
+            </mat-form-field>
+          </div>
+          <div style="width:60%">
+            <mat-form-field class="card__input" appearance="fill">
+              <mat-label>Описание:</mat-label>
+              <textarea style="height: 30px" matInput formControlName="description"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- МИКРОЗАДАЧА -->
+
+
+      </form>
+    </ng-container>
+    <button mat-raised-button (click)="addMicroTask()">
+      Добавить микро-задачу
+    </button>
+
+
+    <div class="card__submit"> <button mat-raised-button type="submit" [disabled]="!form.valid"
+        (click)="onSubmit(form)"> Отправить </button>
+    </div>
+
+
+  </form>
+
+</div>

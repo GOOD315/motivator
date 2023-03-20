@@ -1,0 +1,8 @@
+<mat-toolbar class="menu" color="primary">
+  <ng-container *ngFor="let item of menuItems">
+    <a mat-button [routerLink]="item.link">{{item.name}}</a>
+  </ng-container>
+
+  <div class="spacer"></div>
+  <a mat-button routerLink="auth">Выход</a>
+</mat-toolbar>

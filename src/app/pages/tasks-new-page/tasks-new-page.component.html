@@ -1,0 +1,93 @@
+<div class="container">
+
+  <form class="form" [formGroup]="form">
+
+    <div class="form__header"> Создание макро-задачи </div>
+
+    <div class="form__body">
+      <div class="form__macro-row">
+        <mat-form-field class="form__input" appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field class="form__input" appearance="fill">
+          <mat-label>Приоритет</mat-label>
+          <select matNativeControl formControlName="priority">
+            <option value="1">Высокий</option>
+            <option value="2">Средний</option>
+            <option value="3">Низкий</option>
+          </select>
+        </mat-form-field>
+
+        <mat-form-field class="form__input" appearance="fill">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate formControlName="dateStart" placeholder="Start date">
+            <input matEndDate formControlName="dateFinish" placeholder="End date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+
+          <mat-error *ngIf="form.controls['dateStart'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
+          <mat-error *ngIf="form.controls['dateFinish'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form__macro-row">
+        <mat-form-field class="form__input" appearance="fill">
+          <mat-label>Description</mat-label>
+          <textarea style="height: 180px;" matInput formControlName="description"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+
+
+
+
+
+    <!-- МИКРОЗАДАЧА -->
+    <ng-container *ngFor="let microTask of microTasks.controls; let i = index">
+      <div class="form__header"> Микрозадача {{i+1}}
+        <button *ngIf="this.microTasks.controls.length>1" mat-raised-button (click)="deleteMicroTask(i)">
+          Удалить
+        </button>
+      </div>
+      <form [formGroup]="microTask">
+
+        <div class="form__body">
+          <div style="width:70%">
+            <mat-form-field class="form__input" appearance="fill">
+              <mat-label>Enter a date range</mat-label>
+              <input matInput formControlName="date" [matDatepicker]="picker">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div style="width:60%">
+            <mat-form-field class="form__input" appearance="fill">
+              <mat-label>Описание:</mat-label>
+              <textarea matInput formControlName="description"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- МИКРОЗАДАЧА -->
+
+
+      </form>
+    </ng-container>
+    <button mat-raised-button (click)="addMicroTask()">
+      Добавить микро-задачу
+    </button>
+
+
+    <div class="form__submit"> <button mat-raised-button type="submit" [disabled]="!form.valid"
+        (click)="onSubmit(form)"> Отправить </button>
+    </div>
+
+
+  </form>
+
+</div>

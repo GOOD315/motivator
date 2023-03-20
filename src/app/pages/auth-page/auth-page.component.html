@@ -1,0 +1,43 @@
+<div class="container">
+
+  <div class="form">
+
+
+    <!-- <div class="form__header"> Авторизация </div> -->
+    <div class="form__header">
+      <input id="tab1" type="radio" [value]="true" [(ngModel)]="isRegister">
+      <label for="tab1">Регистрация</label>
+      <input id="tab2" type="radio" [value]="false" [(ngModel)]="isRegister">
+      <label for="tab2">Авторизация</label>
+    </div>
+    <form [formGroup]="form">
+      <mat-form-field class="form__input" appearance="fill">
+        <mat-label>Логин</mat-label>
+        <input matInput formControlName="login">
+        <mat-error *ngIf="form.controls['login'].hasError('required')">
+          Login is required
+        </mat-error>
+        <mat-error
+          *ngIf="form.controls['login'].hasError('noSpaceAllowed') && !form.controls['login'].hasError('required')">
+          login cannot contain a space
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form__input" appearance="fill">
+        <mat-label>Пароль</mat-label>
+        <input matInput formControlName="password">
+        <mat-error *ngIf="form.controls['password'].hasError('required')">
+          password is required
+        </mat-error>
+        <mat-error
+          *ngIf="form.controls['password'].hasError('noSpaceAllowed') && !form.controls['password'].hasError('required')">
+          password cannot contain a space
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form__submit">
+        <button mat-raised-button (click)="onSubmit(form.value)" [disabled]="!form.valid"> Отправить </button>
+      </div>
+    </form>
+  </div>
+</div>
